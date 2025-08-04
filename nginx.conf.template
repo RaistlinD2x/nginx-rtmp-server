@@ -1,0 +1,46 @@
+events {
+    worker_connections 1024;
+}
+
+http {
+    include /etc/nginx/mime.types;
+    default_type application/octet-stream;
+    
+    # Health check endpoint
+    server {
+        listen 8080;
+        location /health {
+            return 200 "OK";
+        }
+        
+        # Optional: Status page
+        location /status {
+            stub_status on;
+            access_log off;
+        }
+    }
+}
+
+rtmp {
+    server {
+        listen 1935;
+        chunk_size 4096;
+        
+        application live {
+            live on;
+            record off;
+            
+            # YouTube
+            push rtmp://a.rtmp.youtube.com/live2/${YOUTUBE_STREAM_KEY};
+            
+            # Twitch
+            push rtmp://live.twitch.tv/app/${TWITCH_STREAM_KEY};
+            
+            # Facebook
+            push rtmp://live-api-s.facebook.com/rtmp/${FACEBOOK_STREAM_KEY};
+            
+            # TikTok
+            push rtmp://live-push.tiktok.com/live/${TIKTOK_STREAM_KEY};
+        }
+    }
+} 
