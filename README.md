@@ -43,10 +43,12 @@ run.bat
 
 The wizard will:
 1. ✅ Check system requirements (Docker, files)
-2. 🔧 Help you configure stream keys
+2. 🔧 Help you configure stream keys (optional - server works without them)
 3. 🐳 Build and start the container
 4. 🧪 Test the setup
 5. 📺 Show OBS configuration
+
+> 💡 **Note**: The server will start successfully even without stream keys configured. Unconfigured platforms are automatically disabled until you add your keys.
 
 ### Option 2: Manual Setup
 
@@ -134,7 +136,15 @@ docker-compose logs --tail=50 nginx-rtmp
    # Download Docker here: https://www.docker.com/products/docker-desktop
    ```
 
-2. **Container won't start**
+2. **Container keeps restarting**
+   ```cmd
+   # Error: Container restarting due to NGINX configuration issues
+   # Solution: The setup wizard automatically handles this by commenting out
+   # unconfigured stream platforms. Just run the wizard and it will work
+   # even without stream keys configured.
+   ```
+
+3. **Container won't start**
    ```cmd
    # Check logs for errors
    docker-compose logs nginx-rtmp
@@ -143,13 +153,13 @@ docker-compose logs --tail=50 nginx-rtmp
    docker-compose exec nginx-rtmp nginx -t
    ```
 
-3. **Stream not reaching platforms**
+4. **Stream not reaching platforms**
    - **Verify your stream keys are correct** - Get fresh keys from each provider
    - Check if platforms are accepting connections
    - Ensure Windows Firewall allows outbound RTMP traffic
    - Verify platform requirements (subscriber/follower counts)
 
-4. **OBS connection issues**
+5. **OBS connection issues**
    - Verify container is running: `docker-compose ps`
    - Check port 1935 is accessible: `telnet localhost 1935`
    - Restart OBS Studio
