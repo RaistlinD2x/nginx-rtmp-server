@@ -1,24 +1,5 @@
 # Sensitive environment variables
 .env
 
-# Docker build cache
-.dockerignore
-
-# Logs
-*.log
-
-# OS generated files
-.DS_Store
-Thumbs.db
-ehthumbs.db
-
-# IDE/project files
-.vscode/
-.idea/
-*.swp
-*.swo
-*~
-
-# Temporary files
-*.tmp
-*.temp
+# ignore the ignore
+.gitignore
